@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  post_id       String
+  category      String
+  sub_category  String
+  title         String
+  body          String
+  description   String
+  keywords      String
+  slug          String  
+  post_url      String
+}
+
+model User {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  user_id       String 
+  name          String  
+  email         String @unique 
+  password      String
+  subscriptions Json
+  user_role     Role    @default(User)    
+}
+
+model Category {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  category_id   String @unique  
+  title         String
+  slug          String
+  description   String  
+}
+
+model Subcategory {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  subCategoryId String 
+  category      String  
+  title         String
+  slug          String
+}
+
+model Quiz {
+  id                      String @id @default(auto()) @map("_id") @db.ObjectId
+  quiz_id                 String @unique
+  title                   String @unique
+  body                    String
+  section_wise_questions  Json
+  section_wise_subjects   Json
+  correct_points          Float
+  incorrect_points        Float
+  total_score             Float
+  quiz_url                String @unique   
+}
+
+model QuestionBank {
+  id                      String @id @default(auto()) @map("_id") @db.ObjectId
+  question_id             Int    @unique
+  section                 String 
+  question                String
+  options                 Json
+  optionsLength           Int
+  correct                 Int
+}
+
+model QuizQuestion {
+  id                      String @id @default(auto()) @map("_id") @db.ObjectId
+  quiz_id                 String 
+  section_id              Int
+  section                 String
+  question_id             Int
+  question_no             Int
+  correct                 Int
+}
+
+model Responses {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  session_id        String
+  quiz_id           String    
+  quiz              String    
+  responses         Json    
+  is_quiz_submitted Boolean
+}
+
+model Results {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  session_id        String 
+  quiz_id           String
+  quiz_name         String 
+  correct           Json
+  incorrect         Json
+  unattempted       Json
+  correct_points    Json 
+  incorrect_points  Json
+  unattempted_points Json 
+  subject_wise_points Json
+  grand_total        Int 
+
+}
+
+enum Role {
+  User
+  Admin
+}

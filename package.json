@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "nuxt": "^3.1.0"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.6",
+    "@prisma/client": "^4.9.0",
+    "bcrypt": "^5.1.0",
+    "bootstrap-icons": "^1.10.3",
+    "crypto-random-string": "^5.0.0"
+  }
+}
